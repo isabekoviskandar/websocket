@@ -18,7 +18,7 @@ class MessageController extends Controller
     {
         $data = $request->validate([
             'message' => 'nullable|string',
-            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:2048', // Validate the uploaded file
+            'image' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:2048', 
         ]);
     
         if ($request->hasFile('image')) {

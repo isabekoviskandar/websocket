@@ -11,24 +11,23 @@ window.Echo = new Echo({
     wssPort: import.meta.env.VITE_REVERB_PORT ?? 443,
     forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,  // Add the cluster
-    encrypted: true,  // Optional, depends on your setup
+    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
+    encrypted: true, 
 });
 
+window.Echo.channel('message')
+    .listen('MessageEvent' , (e)=>{
+        console.log(e);
 
-document.addEventListener('DOMContentLoaded', function () {
-    const messageList = document.getElementById('messageList');
+        const messageList = document.getElementById('messageList');
 
-    if (messageList) {
-        window.Echo.channel('message')
-            .listen('MessageEvent', (e) => {
-                console.log(e);
+        const newMessage = document.createElement('li');
+        const newImage = document.createElement('img');
 
-                const newMessage = document.createElement('li');
-                newMessage.innerText = e.message.message; // Adjust if the data structure differs
-                messageList.prepend(newMessage);
-            });
-    } else {
-        console.error('Element with id "messageList" not found.');
-    }
-});
+        newImage.src = e.message.image;
+        newImage.width = 100;
+        messageList.prepend(newImage);
+
+        newMessage.innerText = e.message.message;
+        messageList.prepend(newMessage);
+    })

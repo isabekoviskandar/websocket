@@ -36,4 +36,6 @@ class MessageEvent implements ShouldBroadcast
             new Channel('message'),
         ];
     }
+
+    
 }
